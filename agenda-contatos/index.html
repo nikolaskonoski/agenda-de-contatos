@@ -31,5 +31,65 @@
         <div class="contacts-list" id="contacts-list"></div>
     </section>
 </main>
+<script>
+    const addBtn = document.getElementById('add-contact');
+    const saveBtn = document.getElementById('save-contact');
+    const formSection = document.getElementById('formulario-de-registro');
+    const contactsList = document.getElementById('contacts-list');
+
+    saveBtn.addEventListener('click', () => {
+        formSection.style.display = formSection.style.display === "none" ? "block" : "none";
+    });
+
+    saveBtn.addEventListener9("click", () => {
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone-number').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        //Validation
+        if (!name || !phone || !email) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+    const contact = {name, phone, email};
+    contacts.push(contact);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+
+    renderContact(contact);
+
+    // Clear and hide the form
+    nameInput.value = '';
+    phoneInput.value = '';
+    emailInput.value = '';
+    formSection.style.display = 'none';
+    });
+
+// funtion to create and hide a card of contact
+function renderContact(contact) {
+    const contactCard = document.createElement('div');
+    contactCard.classList.add('contact-card');
+
+    contactCard.innerHTML = `
+        <p><strong> Name:</strong> ${contact.name}</p>
+        <p><strong> Phone:</strong> ${contact.phone}</p>
+        <p><strong> Email:</strong> ${contact.email}</p>
+        <button class="delete-contact">-</button>
+
+    `;
+
+// Handle delete contact
+card.querySelector('.delete-contact').addEventListener('click', () => {
+ card.remove();
+   contacts = contacts.filter(c =>
+    !(c.name === contact.name && 
+    c.phone === contact.phone && 
+    c.email === contact.email)
+);
+localStorage.setItem('contacts', JSON.stringify(contacts));
+});
+contactsList.appendChild(contactCard);
+}
+</script>
 </body>
 </html>
