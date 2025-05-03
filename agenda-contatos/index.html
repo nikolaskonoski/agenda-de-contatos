@@ -3,93 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact List</title>
+    <title>Contacts List</title>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <header>
-    <h1>Contact List Rivool Finance</h1>
+    <img src="./images/Logo-Rivool-Finance.avif" alt="Logo Rivool Finance" class="logo-Rivool">
+
 </header>
-<main>
-    <section class="button-add">
-        <button id="add-contact" title="Add Contact">+</button>
-    </section>
-    <section class="button-rmv">
-        <button id="rmv-contact" title="Remove Contact">+</button>
-    </section>
-    <section class="formulario-de-registro" id="formulario-de-registro" style="display: none;">
-        <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Type the name of the contact">
-        <label for="phone number">Phone Number:</label>
-        <input type="text" id="phone-number" placeholder="Type a phone number">
-        <label for="email">Type a Email:</label>
-        <type:"email" id="email" placeholder="Type a email">
-        <button id="save-contact">Save the Contact</button>
-    </section>
-    <section class="Contacts-saved">
-        <h2>Contact List</h2>
-        <div class="contacts-list" id="contacts-list"></div>
-    </section>
-</main>
-<script>
-    const addBtn = document.getElementById('add-contact');
-    const saveBtn = document.getElementById('save-contact');
-    const formSection = document.getElementById('formulario-de-registro');
-    const contactsList = document.getElementById('contacts-list');
+    <main>
+        <form id="my-form">
+            <input type="hidden" name="id"/> 
+            <input name="name" type="text" placeholder="Name" maxlength="50" autocomplete="name" required/>
+            <input name="phone" type="text" placeholder="Phone" maxlength="50" autocomplete="tel" required/>
+            <input name="email" type="text" placeholder="Email" maxlength="50" autocomplete="email" required/>
+            <button type="submit" class="btn-submit">Save Contact</button>
+        </form>
+        <div class="lista"> 
+            <input id="pesquisa" type="text" placeholder="Pesquisar"/>
+                <ul>
 
-    saveBtn.addEventListener('click', () => {
-        formSection.style.display = formSection.style.display === "none" ? "block" : "none";
-    });
+                </ul>
+        </div>
+       
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let lista = localStorage.getItem("minhalista");
 
-    saveBtn.addEventListener9("click", () => {
-        const name = document.getElementById('name').value.trim();
-        const phone = document.getElementById('phone-number').value.trim();
-        const email = document.getElementById('email').value.trim();
+        const formulario = document.querySelector("form");
+        const ulPessoas = document.querySelector("ul");
 
-        //Validation
-        if (!name || !phone || !email) {
-            alert("Please fill in all fields.");
-            return;
+         // Adiciona o evento de keyup para o campo de pesquisa
+        document.querySelector('#pesquisa').addEventListener('keyup', (e) => listar(e.target.value));
+
+        if(lista) {
+            lista = JSON.parse(lista);
+        } else {
+            lista= [];
         }
 
-    const contact = {name, phone, email};
-    contacts.push(contact);
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+        listar();
+       
+/* Aqui fizemos o tratamento do formulário, aplicando um comportamento padrão, criamos um novo objeto JSON */
+        formulario.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+            let novaPessoa = {};
+            novaPessoa.nome = this.name.value;
+            novaPessoa.phone = this.phone.value;
+            novaPessoa.email = this.email.value;
+            if (this.id.value !== "" && this.id.value >=0) {
+                lista[this.id.value] = novaPessoa;
+            } else {
+                lista.push(novaPessoa);
+            }
 
-    renderContact(contact);
+            this.reset(); // Clear the form fields
 
-    // Clear and hide the form
-    nameInput.value = '';
-    phoneInput.value = '';
-    emailInput.value = '';
-    formSection.style.display = 'none';
-    });
+            salvarLS(); // Save to local storage
 
-// funtion to create and hide a card of contact
-function renderContact(contact) {
-    const contactCard = document.createElement('div');
-    contactCard.classList.add('contact-card');
+            listar();
 
-    contactCard.innerHTML = `
-        <p><strong> Name:</strong> ${contact.name}</p>
-        <p><strong> Phone:</strong> ${contact.phone}</p>
-        <p><strong> Email:</strong> ${contact.email}</p>
-        <button class="delete-contact">-</button>
+        });
 
-    `;
+        /* Aqui fizemos a função listar, que renderiza os contatos na tela, e também fizemos o tratamento do filtro de pesquisa */
+        /* A função listar percorre o array de contatos e renderiza na tela, se o filtro for vazio, renderiza todos os contatos, indexof procura o nome buscado, percorrendo o array e fazendo uma validação*/
 
-// Handle delete contact
-card.querySelector('.delete-contact').addEventListener('click', () => {
- card.remove();
-   contacts = contacts.filter(c =>
-    !(c.name === contact.name && 
-    c.phone === contact.phone && 
-    c.email === contact.email)
-);
-localStorage.setItem('contacts', JSON.stringify(contacts));
-});
-contactsList.appendChild(contactCard);
-}
-</script>
-</body>
-</html>
+        function listar(filtro='') {
+            ulPessoas.innerHTML = ""; 
+            lista.forEach((item,key) => {  
+                if (item.nome.toUpperCase().indexOf(filtro.toUpperCase()) >= 0 || filtro =="" ) {
+                
+                    linha = document.createElement('li');
+
+                    let s = `<button OnClick="excluir(${key})">Excluir</button> 
+                            <button onClick="editar(${key})">Editar</button>` 
+                    
+                    linha.innerHTML = "Nome:" + item.nome + "Telefone:" + item.phone + "Email:" + item.email + s;
+                    ulPessoas.appendChild(linha);
+            }
+        });
+
+ 
+    }
+
+    function excluir(id) {
+        formulario.reset(); // Clear the form fields
+        lista.splice(id, 1);
+        salvarLS();
+        listar();
+        alert("Contato excluído com sucesso!");
+    }
+
+    function salvarLS(){
+        localStorage.setItem("minhalista", JSON.stringify(lista));
+    }
+
+    function editar(id) {
+        formulario.id.value = id;
+        formulario.name.value = lista[id].nome;
+        formulario.phone.value = lista[id].phone;
+        formulario.email.value = lista[id].email;
+    }
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
