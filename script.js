@@ -14,26 +14,51 @@ if (list) {
 
 listing();
 
-/* Aqui fizemos o tratamento do formulário, aplicando um comportamento padrão, criamos um novo objeto JSON */
+// Here we handle the form, apply default behavior, and create a new JSON object
 form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault(); // Prevents the form from submitting
+
+
+
+    const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+    const phoneRegex = /^\d{8,15}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     let newPeople = {};
+
+    if (!nameRegex.test(this.name.value)) {
+        alert("Invalid name. Only letters and spaces are allowed.");
+        return;
+    }
+
+    if (!phoneRegex.test(this.phone.value)) {
+        alert("Invalid phone number. Only digits (8 to 15 characters) are allowed.");
+        return;
+    }
+
+    if (!emailRegex.test(this.email.value)) {
+        alert("Invalid email format.");
+        return;
+    }
+
     newPeople.name = this.name.value;
     newPeople.phone = this.phone.value;
     newPeople.email = this.email.value;
+
     if (this.id.value !== "" && this.id.value >= 0) {
         list[this.id.value] = newPeople;
     } else {
         list.push(newPeople);
     }
 
-    this.reset(); // Clear the form fields
+    this.reset(); // Clears the form fields
 
-    saveLS(); // Save to local storage
+    saveContact(); // Saves to local storage
 
-    listing();
-
+    listing(); // Updates the contact list on screen
 });
+
+
 
 /* Aqui fizemos a função listar, que renderiza os contatos na tela, e também fizemos o tratamento do filtro de pesquisa */
 /* A função listar percorre o array de contatos e renderiza na tela, se o filtro for vazio, renderiza todos os contatos, indexof procura o nome buscado, percorrendo o array e fazendo uma validação*/
@@ -43,12 +68,12 @@ function listing(filter = '') {
     list.forEach((item, key) => {
         if (item.name.toUpperCase().indexOf(filter.toUpperCase()) >= 0 || filter == "") {
 
-            line = document.createElement('li');
+            const line = document.createElement('li');
 
-            let s = `<button OnClick="deleted(${key})">Delete</button> 
-                    <button onClick="edit(${key})">Edit</button>`
+            let s = `<button OnClick="deleteContact(${key})">Delete</button> 
+                    <button onClick="editContact(${key})">Edit</button>`
 
-            line.innerHTML = "Name:" + item.name + "Phone:" + item.phone + "Email:" + item.email + s;
+            line.innerHTML = line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} ${s}`;
             ulPeoples.appendChild(line);
         }
     });
@@ -56,19 +81,19 @@ function listing(filter = '') {
 
 }
 
-function deleted(id) {
+function deleteContact(id) {
     form.reset(); // Clear the form fields
     list.splice(id, 1);
-    saveLS();
+    saveContact();
     listing();
     alert("Contact deleted successfully");
 }
 
-function saveLS() {
+function saveContact() {
     localStorage.setItem("mylist", JSON.stringify(list));
 }
 
-function edit(id) {
+function editContact(id) {
     form.id.value = id;
     form.name.value = list[id].name;
     form.phone.value = list[id].phone;
