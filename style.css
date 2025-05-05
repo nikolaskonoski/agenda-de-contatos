@@ -52,7 +52,7 @@ form {
     
 }
 
-div.lista {
+div.list {
     text-align: center;
 }
 
@@ -66,16 +66,16 @@ input {
 /* Removed empty ruleset */
 
 
-#pesquisa {
-    min-width: 25%;
+#search {
+    display: block;
+    min-width: 50%;
     max-width: 25%;
-    margin-bottom: 5px;
+    margin: 0 auto 5px auto;
     font-size: 200%;
     border-radius: 10px;
     text-align: center;
-
-}
-
+  }
+  
 
 
 input[type="text"] {

@@ -20,7 +20,7 @@
             <button type="submit" class="btn-submit">Save Contact</button>
         </form>
         <div class="lista"> 
-            <input id="pesquisa" type="text" placeholder="Search"/>
+            <input id="search" type="text" placeholder="Search"/>
                 <ul>
 
                 </ul>
@@ -28,89 +28,8 @@
        
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        let lista = localStorage.getItem("minhalista");
-
-        const formulario = document.querySelector("form");
-        const ulPessoas = document.querySelector("ul");
-
-         // Adiciona o evento de keyup para o campo de pesquisa
-        document.querySelector('#pesquisa').addEventListener('keyup', (e) => listar(e.target.value));
-
-        if(lista) {
-            lista = JSON.parse(lista);
-        } else {
-            lista= [];
-        }
-
-        listar();
-       
-/* Aqui fizemos o tratamento do formulário, aplicando um comportamento padrão, criamos um novo objeto JSON */
-        formulario.addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent form submission
-            let novaPessoa = {};
-            novaPessoa.nome = this.name.value;
-            novaPessoa.phone = this.phone.value;
-            novaPessoa.email = this.email.value;
-            if (this.id.value !== "" && this.id.value >=0) {
-                lista[this.id.value] = novaPessoa;
-            } else {
-                lista.push(novaPessoa);
-            }
-
-            this.reset(); // Clear the form fields
-
-            salvarLS(); // Save to local storage
-
-            listar();
-
-        });
-
-        /* Aqui fizemos a função listar, que renderiza os contatos na tela, e também fizemos o tratamento do filtro de pesquisa */
-        /* A função listar percorre o array de contatos e renderiza na tela, se o filtro for vazio, renderiza todos os contatos, indexof procura o nome buscado, percorrendo o array e fazendo uma validação*/
-
-        function listar(filtro='') {
-            ulPessoas.innerHTML = ""; 
-            lista.forEach((item,key) => {  
-                if (item.nome.toUpperCase().indexOf(filtro.toUpperCase()) >= 0 || filtro =="" ) {
-                
-                    linha = document.createElement('li');
-
-                    let s = `<button OnClick="excluir(${key})">Delete</button> 
-                            <button onClick="editar(${key})">Edit</button>` 
-                    
-                    linha.innerHTML = "Nome:" + item.nome + "Telefone:" + item.phone + "Email:" + item.email + s;
-                    ulPessoas.appendChild(linha);
-            }
-        });
-
- 
-    }
-
-    function excluir(id) {
-        formulario.reset(); // Clear the form fields
-        lista.splice(id, 1);
-        salvarLS();
-        listar();
-        alert("Contato excluído com sucesso!");
-    }
-
-    function salvarLS(){
-        localStorage.setItem("minhalista", JSON.stringify(lista));
-    }
-
-    function editar(id) {
-        formulario.id.value = id;
-        formulario.name.value = lista[id].nome;
-        formulario.phone.value = lista[id].phone;
-        formulario.email.value = lista[id].email;
-    }
-
-
-
-    </script>
-
-
+    <script src="script.js"></script>
+</body>
 
 
 
