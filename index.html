@@ -76,8 +76,8 @@
                 
                     linha = document.createElement('li');
 
-                    let s = `<button OnClick="excluir(${key})">Excluir</button> 
-                            <button onClick="editar(${key})">Editar</button>` 
+                    let s = `<button OnClick="excluir(${key})">Delete</button> 
+                            <button onClick="editar(${key})">Edit</button>` 
                     
                     linha.innerHTML = "Nome:" + item.nome + "Telefone:" + item.phone + "Email:" + item.email + s;
                     ulPessoas.appendChild(linha);
