@@ -23,7 +23,6 @@ header {
     margin: 20px 0 40px 0;
 }
 
-
 /* Opcional: resetando fontes e tamanho de texto */
 body {
     font-family: sans-serif;
@@ -32,7 +31,6 @@ body {
     background-color: black;
     text-decoration: white;
 }
-
 
 main {
     width: 100vw;
@@ -69,9 +67,6 @@ input {
     border-radius: 10px;
 }
 
-/* Removed empty ruleset */
-
-
 #search {
     display: block;
     min-width: 50%;
@@ -81,8 +76,6 @@ input {
     border-radius: 10px;
     text-align: center;
 }
-
-
 
 input[type="text"] {
     width: 50%;
