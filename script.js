@@ -21,7 +21,7 @@ form.addEventListener('submit', function (e) {
 
 
     const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
-    const phoneRegex = /^\d{8,15}$/;
+    const phoneRegex = /^[\d\s()+-]{8,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let newPeople = {};
@@ -45,17 +45,21 @@ form.addEventListener('submit', function (e) {
     newPeople.phone = this.phone.value;
     newPeople.email = this.email.value;
 
-    if (this.id.value !== "" && this.id.value >= 0) {
-        list[this.id.value] = newPeople;
+    const idValue = this.id.value;
+
+    if (idValue !== "" && !isNaN(idValue)) {
+        list[parseInt(idValue)] = newPeople;
     } else {
         list.push(newPeople);
     }
+    this.id.value = ""; // Clear the hidden input field
 
     this.reset(); // Clears the form fields
 
     saveContact(); // Saves to local storage
 
     listing(); // Updates the contact list on screen
+    
 });
 
 
