@@ -8,8 +8,7 @@
 }
 
 header {
-    text-align: center;
-    /* Centraliza o texto no cabeçalho */
+    text-align: center; /* Centraliza o texto no cabeçalho */
     height: auto;
     min-height: 10vh;
 }
@@ -17,9 +16,7 @@ header {
 .logo-rivool {
     width: 100;
     max-width: 100px;
-    /* Largura da logo */
-    height: auto;
-    /* Altura automática para manter a proporção */
+    height: auto; /* Altura automática para manter a proporção */
     margin: 20px 0 40px 0;
 }
 
@@ -69,7 +66,7 @@ input {
 
 #search {
     display: block;
-    min-width: 50%;
+    min-width: 25%;
     max-width: 25%;
     margin: 0 auto 5px auto;
     font-size: 200%;
