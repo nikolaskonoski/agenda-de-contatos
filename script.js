@@ -1,21 +1,33 @@
-let list = localStorage.getItem("mylist");
+
+
+const supabase = createClient(
+  'https://gijdcdwwiackgybicjao.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdpamRjZHd3aWFja2d5YmljamFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcwNTg3MzMsImV4cCI6MjA2MjYzNDczM30.DKCptg8GhAfTa8WFc2sskfcbGXM5eoHv-ATKDnDWaxs'
+);
+
+
+// Aqui fizemos a conexão com o banco de dados, e fizemos a função de carregar os contatos
+let list = [];
+
+async function loadContacts() {
+    const { data, error } = await supabase
+        .from('contacts')
+        .select('*')
+        .order('id', { ascending: true });
+    if (error) {
+        alert("Error loading contacts" + error.message);
+        return;
+    }
+    list = data;
+    listing();
+
+}
 
 const form = document.querySelector("form");
 const ulPeoples = document.querySelector("ul");
 
-// Adiciona o evento de keyup para o campo de pesquisa
-document.querySelector('#search').addEventListener('keyup', (e) => listing(e.target.value));
-
-if (list) {
-    list = JSON.parse(list);
-} else {
-    list = [];
-}
-
-listing();
-
 // Here we handle the form, apply default behavior, and create a new JSON object
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', async function (e) {
     e.preventDefault(); // Prevents the form from submitting
 
 
@@ -24,72 +36,108 @@ form.addEventListener('submit', function (e) {
     const phoneRegex = /^[\d\s()+-]{8,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    let newPeople = {};
 
-    if (!nameRegex.test(this.name.value)) {
+    if (!nameRegex.test(form.name.value)) {
         alert("Invalid name. Only letters and spaces are allowed.");
         return;
     }
 
-    if (!phoneRegex.test(this.phone.value)) {
+    if (!phoneRegex.test(form.phone.value)) {
         alert("Invalid phone number. Only digits (8 to 15 characters) are allowed.");
         return;
     }
 
-    if (!emailRegex.test(this.email.value)) {
+    if (!emailRegex.test(form.email.value)) {
         alert("Invalid email format.");
         return;
     }
 
-    newPeople.name = this.name.value;
-    newPeople.phone = this.phone.value;
-    newPeople.email = this.email.value;
+    const newPeople = {
+        name: form.name.value,
+        phone: form.phone.value,
+        email: form.email.value
+    };
 
-    const idValue = this.id.value;
+    const id = form.id.value;
 
-    if (idValue !== "" && !isNaN(idValue)) {
-        list[parseInt(idValue)] = newPeople;
+    if (id) {
+        // Edit existing contact
+        const { error } = await supabase
+            .from('contacts')
+            .update(newPeople)
+            .eq('id', id);
+
+        if (error) {
+            alert("Error updating contact" + error.message);
+            return;
+        }
     } else {
-        list.push(newPeople);
+        // Add new contact
+        const { error } = await supabase
+            .from('contacts')
+            .insert([newPeople]);
+
+        if (error) {
+            alert("Error adding contact" + error.message);
+            return;
+        }
     }
-    this.id.value = ""; // Clear the hidden input field
-
-    this.reset(); // Clears the form fields
-
-    saveContact(); // Saves to local storage
-
-    listing(); // Updates the contact list on screen
-    
+    form.reset(); // Clear the form fields
+    form.id.value = ""; // Clear the hidden input field
+    await loadContacts(); // Update the contact list
 });
+
+// Filter of Search in real time 
+document.querySelector('#search').addEventListener('keyup', (e) => {
+    listing(e.target.value);
+});
+
 
 
 
 /* Aqui fizemos a função listar, que renderiza os contatos na tela, e também fizemos o tratamento do filtro de pesquisa */
 /* A função listar percorre o array de contatos e renderiza na tela, se o filtro for vazio, renderiza todos os contatos, indexof procura o nome buscado, percorrendo o array e fazendo uma validação*/
 
-function listing(filter = '') {
+async function listing(filter = '') {
     ulPeoples.innerHTML = "";
-    list.forEach((item, key) => {
-        if (item.name.toUpperCase().indexOf(filter.toUpperCase()) >= 0 || filter == "") {
 
-            const line = document.createElement('li');
+    const { data, error } = await supabase
+        .from('contacts')
+        .select('*');
 
-            let s = `<button OnClick="deleteContact(${key})">Delete</button> 
-                    <button onClick="editContact(${key})">Edit</button>`
+    if (error) {
+        console.error('Error fetching contacts:', error);
+        alert('Failed to load contacts');
+        return;
+    }
 
-            line.innerHTML = line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} ${s}`;
+    list = data;
+
+    list.forEach((item) => {
+        if (item.name.toUpperCase().indexOf(filter.toUpperCase()) >= 0 || filter === '') {
+            const line = document.createElement("li");
+            let s = `
+                <button class="delete-btn" onclick="deleteContact(${item.id})">Delete</button> 
+                <button clas="editbtn" onclick="editContact(${item.id})">Edit</button>
+                `;
+            line.innerHTML = `<strong>${item.name}</strong> - ${item.phone} - ${item.email} ${s}`;
             ulPeoples.appendChild(line);
         }
     });
+};
 
+async function deleteContact(id) {
+    const { error } = await supabase
+        .from('contacts')
+        .delete()
+        .eq('id', id);
 
-}
+    if (error) {
+        alert("Error deleting contact" + error.message);
+        return;
+    }
 
-function deleteContact(id) {
-    form.reset(); // Clear the form fields
-    list.splice(id, 1);
-    saveContact();
-    listing();
+    loadContacts();
     alert("Contact deleted successfully");
 }
 
@@ -98,11 +146,20 @@ function saveContact() {
 }
 
 function editContact(id) {
-    form.id.value = id;
-    form.name.value = list[id].name;
-    form.phone.value = list[id].phone;
-    form.email.value = list[id].email;
+    const contact = list.find(c => c.id === id);
+
+    if (!contact) {
+        alert("Contact not found");
+        return;
+    }
+
+    form.id.value = contact.id;
+    form.name.value = contact.name;
+    form.phone.value = contact.phone;
+    form.email.value = contact.email;
 }
 
+// Start loading form Supabase
+loadContacts();
 
 

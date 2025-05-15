@@ -37,8 +37,8 @@ main {
 }
 
 form {
-    gap: 10px;
-    width: 50%;
+    gap: 20px;
+    width: 35%;
     height: 50%;
     display: flex;
     flex-direction: column;
@@ -66,10 +66,10 @@ input {
 
 #search {
     display: block;
-    min-width: 25%;
-    max-width: 25%;
+    min-width: 5%;
+    max-width: 20%;
     margin: 0 auto 5px auto;
-    font-size: 200%;
+    font-size:150%;
     border-radius: 10px;
     text-align: center;
 }
