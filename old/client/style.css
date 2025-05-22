@@ -1,0 +1,140 @@
+/* Reset básico de CSS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Faz com que o padding e a borda não aumentem o tamanho do elemento */
+}
+
+header {
+    text-align: center; /* Centraliza o texto no cabeçalho */
+    height: auto;
+    min-height: 10vh;
+}
+
+.logo-rivool {
+    width: 100;
+    max-width: 100px;
+    height: auto; /* Altura automática para manter a proporção */
+    margin: 20px 0 40px 0;
+}
+
+/* Opcional: resetando fontes e tamanho de texto */
+body {
+    font-family: sans-serif;
+    /* Define uma fonte padrão */
+    font-size: 16px;
+    background-color: black;
+    text-decoration: white;
+}
+
+main {
+    width: 100vw;
+    padding: 10px;
+    height: 80vh;
+    color: white;
+}
+
+form {
+    gap: 10px;
+    width: 35%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    border: 10px solid rgb(255, 213, 0);
+    border-radius: 10px;
+    /* Bordas arredondadas */
+    padding: 12px;
+    box-shadow: 1px 1px rgb(255, 213, 0);
+    text-align: center;
+    align-items: center;
+
+}
+
+div.list {
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+#search {
+    display: block;
+    min-width: 25%;
+    max-width: 25%;
+    margin: 0 auto 5px auto;
+    font-size: 25px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 50%;
+    height: 20%;
+    padding: 5px;
+    outline: none;
+    width: 90%;
+}
+
+input[type="submit"] {
+    font-size: 100px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    background-color: rgb(255, 213, 0);
+    width: 100vw;
+    height: 100vh;
+    cursor: pointer;
+}
+
+.list {
+    padding: 10px;
+    margin-top: 10px;
+    height: 60%;
+    background-color: rgb(255, 213, 0);
+}
+
+ul {
+    list-style: none;
+    overflow: auto;
+    height: 100%;
+}
+
+li {
+    font-size: 25px;
+    border-bottom: 1px solid rgb(255, 213, 0);
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+button {
+    font-size: 25px;
+    margin-left: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: rgb(255, 213, 0);
+    background-color: rgb(255, 213, 0);
+    color: black;
+    font-size: 20px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button.btn-submit {
+
+    background-color: rgb(255, 213, 0);
+    color: black;
+    font-size: 20px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
