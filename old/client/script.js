@@ -1,30 +1,20 @@
-let list = localStorage.getItem("mylist");
+let list = JSON.parse(localStorage.getItem("mylist")) || [];
 
 const form = document.querySelector("form");
 const ulPeoples = document.querySelector("ul");
+const searchInput = document.querySelector('#search');
 
-// Adiciona o evento de keyup para o campo de pesquisa
-document.querySelector('#search').addEventListener('keyup', (e) => listing(e.target.value));
-
-if (list) {
-    list = JSON.parse(list);
-} else {
-    list = [];
-}
+searchInput.addEventListener('keyup', (e) => listing(e.target.value));
 
 listing();
 
-// Here we handle the form, apply default behavior, and create a new JSON object
 form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevents the form from submitting
+    e.preventDefault();
 
-
-/*Validation of inputs */
+    /*Validation of inputs */
     const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
     const phoneRegex = /^(?=(?:.*\d){8,11})[\d\s()+-]{8,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    let newPeople = {};
 
     if (!nameRegex.test(this.name.value)) {
         alert("Invalid name. Only letters and spaces are allowed.");
@@ -41,9 +31,11 @@ form.addEventListener('submit', function (e) {
         return;
     }
 
-    newPeople.name = this.name.value;
-    newPeople.phone = this.phone.value;
-    newPeople.email = this.email.value;
+    const newPeople = {
+    name: this.name.value,
+    phone: this.phone.value,
+    email: this.email.value
+    };
 
     const idValue = this.id.value;
 
@@ -52,57 +44,56 @@ form.addEventListener('submit', function (e) {
     } else {
         list.push(newPeople);
     }
-    this.id.value = ""; // Clear the hidden input field
 
+    this.id.value = ""; // Clear the hidden input field
     this.reset(); // Clears the form fields
 
     saveContact(); // Saves to local storage
-
     listing(); // Updates the contact list on screen
 
 });
+    function listing(filter = '') {
+        ulPeoples.innerHTML = "";
 
-
-
-/* Aqui fizemos a função listar, que renderiza os contatos na tela, e também fizemos o tratamento do filtro de pesquisa */
-/* A função listar percorre o array de contatos e renderiza na tela, se o filtro for vazio, renderiza todos os contatos, indexof procura o nome buscado, percorrendo o array e fazendo uma validação*/
-
-function listing(filter = '') {
-    ulPeoples.innerHTML = "";
-    list.forEach((item, key) => {
-        if (item.name.toUpperCase().indexOf(filter.toUpperCase()) >= 0 || filter == "") {
-
+        list.forEach((item, key) => {
+        if (item.name.toUpperCase().includes(filter.toUpperCase()) || filter === "") {
             const line = document.createElement('li');
+            line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} `;
 
-            let s = `<button OnClick="deleteContact(${key})">Delete</button> 
-                    <button onClick="editContact(${key})">Edit</button>`
+            const btnDelete = document.createElement('button');
+            btnDelete.textContent = "Delete";
+            btnDelete.addEventListener('click', () => deleteContact(key));
 
-            line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} ${s}`;
+            const btnEdit = document.createElement('button');
+            btnEdit.textContent = "Edit";
+            btnEdit.addEventListener('click', () => editContact(key));
+
+            line.appendChild(btnDelete);
+            line.appendChild(btnEdit);
+
             ulPeoples.appendChild(line);
         }
-    });
-
-
+    });    
 }
 
-function deleteContact(id) {
-    form.reset(); // Clear the form fields
-    list.splice(id, 1);
-    saveContact();
-    listing();
-    alert("Contact deleted successfully");
-}
-
-function saveContact() {
-    localStorage.setItem("mylist", JSON.stringify(list));
-}
-
-function editContact(id) {
-    form.id.value = id;
-    form.name.value = list[id].name;
-    form.phone.value = list[id].phone;
-    form.email.value = list[id].email;
-}
+   function deleteContact(id) {
+    if (confirm("Are you sure you want to delete this contact?")) {
+        form.reset();
+        list.splice(id, 1);
+        saveContact();
+        listing();
+        alert("Contact deleted successfully.");
+    }};
 
 
+    function saveContact() {
+        localStorage.setItem("mylist", JSON.stringify(list));
+    };
+
+    function editContact(id) {
+        form.id.value = id;
+        form.name.value = list[id].name;
+        form.phone.value = list[id].phone;
+        form.email.value = list[id].email;
+    };
 
