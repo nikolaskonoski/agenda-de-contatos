@@ -135,6 +135,18 @@ button.btn-submit {
     cursor: pointer;
 }
 
+button.edit-button {
+        width: 100px;
+        font-size: inherit;
+    }
+
+    button.delete-button {
+        width: 100px;
+        font-size: inherit;
+        background-color: red;
+    }
+
+
 @media (max-width: 767px) {
 
     li {
@@ -153,15 +165,6 @@ button.btn-submit {
         flex: 1 1 auto;
     }
 
-    li > button {
-        /* width: auto; */
-        margin: 0;
-        padding: 8px 12px;
-        flex-grow: 1;
-        margin-top: 10px;
-        min-width: 100px;
-    }
-
     li > *:last-child {
         display: flex;
         flex-direction: row; 
@@ -170,6 +173,25 @@ button.btn-submit {
         width: 100%;
         margin-top: 10px;
     } 
+
+    li > button {
+        margin: 0;
+        padding: 8px 12px;
+        flex-grow: 0;
+        margin-top: 10px;
+        min-width: 100px;
+    }
+
+    button.edit-button {
+        width: 100px;
+        font-size: inherit;
+    }
+
+    button.delete-button {
+        width: 100px;
+        font-size: inherit;
+        background-color: red;
+    }
 
     #my-form {
         width: 90%;
