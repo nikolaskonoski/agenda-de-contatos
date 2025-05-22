@@ -19,9 +19,9 @@ form.addEventListener('submit', function (e) {
     e.preventDefault(); // Prevents the form from submitting
 
 
-
+/*Validation of inputs */
     const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
-    const phoneRegex = /^[\d\s()+-]{8,20}$/;
+    const phoneRegex = /^(?=(?:.*\d){8,11})[\d\s()+-]{8,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let newPeople = {};
@@ -59,7 +59,7 @@ form.addEventListener('submit', function (e) {
     saveContact(); // Saves to local storage
 
     listing(); // Updates the contact list on screen
-    
+
 });
 
 
@@ -77,7 +77,7 @@ function listing(filter = '') {
             let s = `<button OnClick="deleteContact(${key})">Delete</button> 
                     <button onClick="editContact(${key})">Edit</button>`
 
-            line.innerHTML = line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} ${s}`;
+            line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} ${s}`;
             ulPeoples.appendChild(line);
         }
     });
