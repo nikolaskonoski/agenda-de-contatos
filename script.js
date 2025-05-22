@@ -58,14 +58,20 @@ form.addEventListener('submit', function (e) {
         list.forEach((item, key) => {
         if (item.name.toUpperCase().includes(filter.toUpperCase()) || filter === "") {
             const line = document.createElement('li');
-            line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} `;
+            line.innerHTML = `
+              <span>Name: ${item.name}</span>
+              <span>Phone: ${item.phone}</span>
+              <span>Email: ${item.email}</span>
+            `;
 
             const btnDelete = document.createElement('button');
             btnDelete.textContent = "Delete";
+            btnDelete.classList.add('delete-button');
             btnDelete.addEventListener('click', () => deleteContact(key));
 
             const btnEdit = document.createElement('button');
             btnEdit.textContent = "Edit";
+            btnEdit.classList.add('edit-button');
             btnEdit.addEventListener('click', () => editContact(key));
 
             line.appendChild(btnDelete);
