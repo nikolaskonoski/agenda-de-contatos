@@ -136,15 +136,15 @@ button.btn-submit {
 }
 
 button.edit-button {
-        width: 100px;
-        font-size: inherit;
-    }
+    width: 100px;
+    font-size: inherit;
+}
 
-    button.delete-button {
-        width: 100px;
-        font-size: inherit;
-        background-color: red;
-    }
+button.delete-button {
+    width: 100px;
+    font-size: inherit;
+    background-color: red;
+}
 
 
 @media (max-width: 767px) {
@@ -157,7 +157,7 @@ button.edit-button {
         flex-wrap: wrap;
     }
 
-    li > span {
+    li>span {
         display: block;
         width: 100%;
         margin-bottom: 5px;
@@ -165,16 +165,16 @@ button.edit-button {
         flex: 1 1 auto;
     }
 
-    li > *:last-child {
+    li>*:last-child {
         display: flex;
-        flex-direction: row; 
-        justify-content: center; 
-        gap: 10px; 
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
         width: 100%;
         margin-top: 10px;
-    } 
+    }
 
-    li > button {
+    li>button {
         margin: 0;
         padding: 8px 12px;
         flex-grow: 0;
