@@ -20,4 +20,4 @@ This project is part of my learning journey following the teachings of Professor
 
 Its functions are to create, edit, delete, save and search the user's contacts.
 
-Link: https://nikolaskonoski.github.io/contacts-list/
+Link: https://nikolaskonoski.github.io/contact-list/
