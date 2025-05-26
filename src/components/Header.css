@@ -1,0 +1,22 @@
+/* Header.css */
+
+.app-header {
+    background-color: rgb(255, 213, 0);
+    ;
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /*Garante que fique acima de outros elementos*/
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.app-logo {
+    max-height: 50px;
+    width: auto;
+}
