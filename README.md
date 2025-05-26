@@ -15,7 +15,8 @@ This project is part of my learning journey following the teachings of Professor
 
 - HTML  
 - CSS  
-- JavaScript  
+- JavaScript
+- ReactJSX 
 
 Its functions are to create, edit, delete, save and search the user's contacts.
 
