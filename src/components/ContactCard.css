@@ -1,0 +1,24 @@
+/* src/components/ContactCard.css (Exemplo) */
+.contact-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex; /* Para alinhar o botão */
+  justify-content: space-between; /* Coloca o texto de um lado e o botão do outro */
+  align-items: center; /* Alinha verticalmente */
+}
+
+.delete-button {
+  background-color: #f44336; /* Vermelho */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
