@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import ContactForm from './components/ContactForm.jsx';
 import ContactList from "./components/ContactList.jsx";
 import SearchFilter from "./components/SearchFilter.jsx";
+import { v4 as uuidv4 } from "uuid";
 import './App.css';
 
 const LOCAL_STORAGE_KEY = "contact-list-app-contacts";
@@ -14,7 +15,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
 
 
- useEffect(() => {
+  useEffect(() => {
     try {
       const storedContacts = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (storedContacts) {
@@ -53,16 +54,19 @@ function App() {
     }
   }, [contacts]);
 
-  const addContactHandler = (contactData) => {
-    setContacts((prevContacts) => {
 
-      return [contactData, ...prevContacts];
-    })
-    console.log("Contact received in App:", contactData);
+  // HANDLERS
+
+  const addContactHandler = (contactData) => {
+    const newContact = { ...contactData, id: uuidv4() };
+    setContacts((prevContacts) => {
+      return [newContact, ...prevContacts];
+    });
+    console.log("Contact added with UUID:", newContact);
   };
 
   const searchChangeHandler = (term) => {
-      setSearchTerm(term);
+    setSearchTerm(term);
   };
 
   const deleteContactHandler = (contactId) => {
@@ -73,17 +77,20 @@ function App() {
 
   const updateContactHandler = (contactId, updateData) => {
     setContacts((prevContacts) =>
-    prevContacts.map((contact) => 
-      contact.id === contactId ? {...updateData, id: contactId } : contact 
-    )
-  );
-  console.log("Update contact:", contactId, updateData);
-};
+      prevContacts.map((contact) =>
+        contact.id === contactId ? { ...updateData, id: contactId } : contact
+      )
+    );
+  };
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // FILTERING
 
+  const filteredContacts = Array.isArray(contacts) ? contacts.filter(contact =>
+    contact.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+  ) : [];
+
+
+  // RENDER 
 
   return (
     <div className="App">
@@ -95,10 +102,10 @@ function App() {
           searchTerm={searchTerm}
           onSearchChange={searchChangeHandler}
         />
-        <ContactList 
-        contacts={filteredContacts} 
-        onDeleteContact={deleteContactHandler}
-        onUpdateContact={updateContactHandler}
+        <ContactList
+          contacts={filteredContacts}
+          onDeleteContact={deleteContactHandler}
+          onUpdateContact={updateContactHandler}
         />
       </main>
     </div>
