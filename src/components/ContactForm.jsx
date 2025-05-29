@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 
 function ContactForm({ onAddContact }) {
@@ -74,25 +76,104 @@ function ContactForm({ onAddContact }) {
 
     return (
         <form onSubmit={handleSubmit} noValidate>
-            <h2>Add your Contacts</h2>
-            <div>
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" placeholder="Enter name:" value={name} onChange={handleInputChange(setName, 'name')} autoComplete="name" className={errors.name ? 'input-error' : ''} />
-                {errors.name && <p className="error-message">{errors.name}</p>}
-            </div>
-            <div>
-                <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" placeholder="Enter phone:" value={phone} onChange={handleInputChange(setPhone, 'phone')} autoComplete="tel" className={errors.phone ? 'input-error' : ''} />
-                {errors.phone && <p className="error-message">{errors.phone}</p>}
-            </div>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" placeholder="Enter email" value={email} onChange={handleInputChange(setEmail, 'email')} autoComplete="email" className={errors.email ? 'input-eror' : ''} />
-                {errors.email && <p className="error-message">{errors.email}</p>}
-            </div>
-            <div>
-                <button type="submit">Save Contact</button>
-            </div>
+            <h2>CONTACT LIST</h2>
+            <TextField
+                id="name"
+                name="name" // Bom para acessibilidade e forms
+                label="Nome" // A label flutuante do MUI
+                variant="outlined" // Estilo do campo (outlined, filled, standard)
+                fullWidth // Ocupa toda a largura disponível
+                margin="normal" // Adiciona uma margem padrão (normal ou dense)
+                value={name}
+                onChange={handleInputChange(setName, 'name')}
+                autoComplete="name"
+                error={!!errors.name} // !! converte a string de erro para booleano (true se existe erro)
+                helperText={errors.name || ''} // Mostra a mensagem de erro abaixo do campo
+
+                sx={{
+                    // Estilo para o estado normal do input
+                    '& .MuiOutlinedInput-root': {
+                        backgroundColor: 'white',
+                    },
+                    '& .MuiInputBase-input': { // Texto digitado normalmente
+                        color: 'black',
+                        fontWeight: '500',
+                    },
+                    // === ESTILOS PARA AUTOFILL (WEBKIT) ===
+                    '& .MuiInputBase-input:-webkit-autofill, & .MuiInputBase-input:-webkit-autofill:hover, & .MuiInputBase-input:-webkit-autofill:focus, & .MuiInputBase-input:-webkit-autofill:active': {
+                        WebkitTextFillColor: 'black !important',
+                        caretColor: 'black !important',
+                        WebkitBoxShadow: '0 0 0px 1000px white inset !important',
+                        transition: 'background-color 5000s ease-in-out 0s',
+                    },
+                }}
+            />
+
+            <TextField
+                id="phone"
+                name="phone"
+                label="Telefone"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="tel" // Define o tipo de input
+                value={phone}
+                onChange={handleInputChange(setPhone, 'phone')}
+                autoComplete="tel"
+                error={!!errors.phone}
+                helperText={errors.phone || ''}
+                sx={{
+                    // Estilo para o estado normal do input
+                    '& .MuiOutlinedInput-root': {
+                        backgroundColor: 'white',
+                    },
+                    '& .MuiInputBase-input': { // Texto digitado normalmente
+                        color: 'black',
+                        fontWeight: '500',
+                    },
+                    // === ESTILOS PARA AUTOFILL (WEBKIT) ===
+                    '& .MuiInputBase-input:-webkit-autofill, & .MuiInputBase-input:-webkit-autofill:hover, & .MuiInputBase-input:-webkit-autofill:focus, & .MuiInputBase-input:-webkit-autofill:active': {
+                        WebkitTextFillColor: 'black !important',
+                        caretColor: 'black !important',
+                        WebkitBoxShadow: '0 0 0px 1000px white inset !important',
+                        transition: 'background-color 5000s ease-in-out 0s',
+                    },
+                }}
+
+            />
+
+            <TextField
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="email"
+                value={email}
+                onChange={handleInputChange(setEmail, 'email')}
+                autoComplete="email"
+                error={!!errors.email}
+                helperText={errors.email || ''}
+                sx={{
+                    // Estilo para o estado normal do input
+                    '& .MuiOutlinedInput-root': {
+                        backgroundColor: 'white',
+                    },
+                    '& .MuiInputBase-input': { // Texto digitado normalmente
+                        color: 'black',
+                        fontWeight: '500',
+                    },
+                    // === ESTILOS PARA AUTOFILL (WEBKIT) ===
+                    '& .MuiInputBase-input:-webkit-autofill, & .MuiInputBase-input:-webkit-autofill:hover, & .MuiInputBase-input:-webkit-autofill:focus, & .MuiInputBase-input:-webkit-autofill:active': {
+                        WebkitTextFillColor: 'black !important',
+                        caretColor: 'black !important',
+                        WebkitBoxShadow: '0 0 0px 1000px white inset !important',
+                        transition: 'background-color 5000s ease-in-out 0s',
+                    },
+                }}
+            />
+            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>Save Contact</Button>
         </form>
     );
 }

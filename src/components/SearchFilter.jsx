@@ -1,18 +1,23 @@
 import React from "react";
+import Box from '@mui/material/Box';
+import TextField from "@mui/material/TextField";
 
 function SearchFilter({ searchTerm, onSearchChange }) {
     return (
-        <div className="search-filter">
-            <label htmlFor="search">Search Contact:</label>
-            <input
-                type="text"
+        <Box sx={{ width: '100%', mb: 2 }}> {/* mb: 2 para margin-bottom */}
+            <TextField
                 id="search"
-                placeholder="Type for search..."
+                label="Buscar Contato" // A label do MUI
+                variant="outlined" // Mesmo estilo dos outros campos
+                fullWidth // Ocupa toda a largura do Box pai
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
+                placeholder="Digite para buscar..." // Pode ser útil se a label não for suficiente
+                InputProps={{ // Permite adicionar adornos, como um ícone de busca (passo futuro!)
+                    type: 'search', // Define o tipo semântico, pode mostrar um 'x' para limpar em alguns navegadores
+                }}
             />
-        </div>
-
+        </Box>
     );
 }
 

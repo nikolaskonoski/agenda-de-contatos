@@ -16,7 +16,7 @@ function ContactList({ contacts, onDeleteContact, onUpdateContact }) {
 
     return (
         <div className="contact-list">
-            <h2>Contact List</h2>
+            <h2>SAVED CONTACTS</h2>
             {contacts.length === 0 ? (
                 <p>No contacts saved yet.</p>
             ) : (
