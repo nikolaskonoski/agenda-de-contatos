@@ -56,7 +56,6 @@ function App() {
 
 
   // HANDLERS
-
   const addContactHandler = (contactData) => {
     const newContact = { ...contactData, id: uuidv4() };
     setContacts((prevContacts) => {

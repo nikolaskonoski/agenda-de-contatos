@@ -95,7 +95,7 @@ function ContactForm({ onAddContact }) {
                     '& .MuiOutlinedInput-root': {
                         backgroundColor: 'white',
                     },
-                    '& .MuiInputBase-input': { // Texto digitado normalmente
+                    '& .MuiInputBase-input': { 
                         color: 'black',
                         fontWeight: '500',
                     },
@@ -173,7 +173,15 @@ function ContactForm({ onAddContact }) {
                     },
                 }}
             />
-            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>Save Contact</Button>
+            <Button type="submit" variant="contained"
+                sx={{
+                    mt: 2,
+                    mb: 2,
+                    backgroundColor: 'black',
+                    color: 'white',
+                    '&:hover': { backgroundColor: '#333', },
+                }}
+            >Save Contact</Button>
         </form>
     );
 }

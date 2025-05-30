@@ -1,13 +1,25 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import './Header.css';
 import logo from '../assets/logo-rivool.png';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+
 
 function Header() {
     return (
-        <header className="app-header">
-            <img src={logo} className="app-logo" alt="Logotipo empresarial" />
-        </header>
+        <AppBar position="fixed" sx={{ backgroundColor: 'black' }}>
+            <Toolbar sx={{ justifyContent: 'center' }}>
+                <Box
+                    component="img"
+                    src={logo}
+                    alt="Logo da Aplicação"
+                    sx={{
+                        height: '40px', 
+                    }}
+                />
+            </Toolbar>
+        </AppBar>
     );
 }
 
