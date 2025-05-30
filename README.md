@@ -1,7 +1,7 @@
 # Contact List
 
-A simple contact agenda that will be updated as my knowledge grows.  
-This project is part of my learning journey following the teachings of Professor Hallan Neves.
+A simple contact list that will be updated as my knowledge grows.  
+This project is part of my learning journey following the teachings of mentor Hallan Neves.
 
 ## 📋 Features
 
