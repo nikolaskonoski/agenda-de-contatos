@@ -7,7 +7,7 @@ function SearchFilter({ searchTerm, onSearchChange }) {
         <Box sx={{ width: '100%', mb: 2 }}> {/* mb: 2 para margin-bottom */}
             <TextField
                 id="search"
-                label="Buscar Contato" // A label do MUI
+                label="Search Contact" // A label do MUI
                 variant="outlined" // Mesmo estilo dos outros campos
                 fullWidth // Ocupa toda a largura do Box pai
                 value={searchTerm}
