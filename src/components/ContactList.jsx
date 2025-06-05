@@ -13,29 +13,24 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// O componente agora recebe 'contacts', 'onDeleteContact', e 'onStartEdit' como props.
-// 'onStartEdit' será chamada quando o botão de editar de uma linha for clicado.
 function ContactList({ contacts, onDeleteContact, onStartEdit }) {
   return (
-    <Box
-      className="contact-list-container" // Você pode manter esta classe para estilos CSS específicos, se tiver.
-      sx={{ width: "100%", mt: 2 }} // Margem no topo para dar espaço após o filtro de busca.
-    >
+    <Box className="contact-list-container" sx={{ width: "100%", mt: 2 }}>
       <Typography
-        component="h2" // Renderiza semanticamente como um <h2>
+        component="h2"
         sx={{
           display: "block",
-          fontSize: "1.5em", // Tamanho da fonte como um h2 padrão de navegador
-          fontWeight: "bold", // Peso da fonte como um h2 padrão de navegador
-          fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif", // Família da fonte conforme solicitado
-          color: "black", // Cor escura para o texto (do seu index.css)
-          mt: 2, // Margem no topo
-          mb: 2, // Margem na base
-          alignSelf: "flex-start", // Alinha o título à esquerda (considerando o Box pai em App.jsx)
+          fontSize: "1.5em",
+          fontWeight: "bold",
+          fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+          color: "black",
+          mt: 2,
+          mb: 2,
+          alignSelf: "flex-start",
         }}
       >
         {" "}
-        Saved Contacts
+        SAVED CONTACTS
       </Typography>
       {contacts.length === 0 ? (
         <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>

@@ -71,7 +71,7 @@ function ContactForm({
     setter(e.target.value);
 
     if (errors[fieldName]) {
-      SetErrors((prevErrors) => {
+      setErrors((prevErrors) => {
         const newErrors = { ...prevErrors };
         delete newErrors[fieldName];
         return newErrors;
@@ -80,20 +80,61 @@ function ContactForm({
   };
 
   const commonTextFieldSx = {
-    "& .MuiOutlinedInput-root": { backgroundColor: "white" },
-    "& .MuiInputBase-input": { color: "black", fontWeight: "500" },
+    "& .MuiOutlinedInput-root": {
+      backgroundColor: "white",
+    },
+    "& .MuiInputBase-input": {
+      color: "black",
+      fontWeight: "500",
+      boxSizing: "border-box",
+      fontFamily: "inherit",
+    },
     "& .MuiInputBase-input:-webkit-autofill, & .MuiInputBase-input:-webkit-autofill:hover, & .MuiInputBase-input:-webkit-autofill:focus, & .MuiInputBase-input:-webkit-autofill:active":
       {
         WebkitTextFillColor: "black !important",
         caretColor: "black !important",
         WebkitBoxShadow: "0 0 0px 1000px white inset !important",
         transition: "background-color 5000s ease-in-out 0s",
+        fontFamily: "inherit !important",
+        fontWeight: "500 !important",
+        padding: "16.5px 14px !important",
+        height: "1.4375em !important",
+        lineHeight: "1.4375em !important",
+        boxSizing: "border-box !important",
+      },
+  };
+
+  const birthdayTextFieldSx = {
+    "& .MuiOutlinedInput-root": {
+      backgroundColor: "white",
+    },
+    "& .MuiInputBase-input": {
+      color: "black",
+      fontWeight: "500",
+      boxSizing: "border-box",
+      fontFamily: "inherit",
+      padding: "26.5px 14px",
+      height: "1.4375em",
+      lineHeight: "1.4375em",
+    },
+    "& .MuiInputBase-input:-webkit-autofill, & .MuiInputBase-input:-webkit-autofill:hover, & .MuiInputBase-input:-webkit-autofill:focus, & .MuiInputBase-input:-webkit-autofill:active":
+      {
+        WebkitTextFillColor: "black !important",
+        caretColor: "black !important",
+        WebkitBoxShadow: "0 0 0px 1000px white inset !important",
+        transition: "background-color 5000s ease-in-out 0s",
+        fontFamily: "inherit !important",
+        fontWeight: "500 !important",
+        padding: "26.5px 14px !important",
+        height: "1.4375em !important",
+        lineHeight: "1.4375em !important",
+        boxSizing: "border-box !important",
       },
   };
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <h2>{editingContact ? "Edit Contact" : "My contact list"}</h2>
+      <h2>{editingContact ? "Edit Contact" : "CONTACT LIST"}</h2>
       <TextField
         id="name"
         name="name"
@@ -106,8 +147,8 @@ function ContactForm({
         autoComplete="name"
         error={!!errors.name}
         helperText={errors.name || ""}
-        sx={commonTextFieldSx}
       />
+
       <TextField
         id="phone"
         name="phone"
@@ -121,7 +162,6 @@ function ContactForm({
         autoComplete="tel"
         error={!!errors.phone}
         helperText={errors.phone || ""}
-        sx={commonTextFieldSx}
       />
       <TextField
         id="email"
@@ -136,13 +176,12 @@ function ContactForm({
         autoComplete="email"
         error={!!errors.email}
         helperText={errors.email || ""}
-        sx={commonTextFieldSx}
       />
 
       <TextField
         id="birthday"
         name="birthday"
-        label="Birthday Date"
+        label="Date of birth"
         type="date"
         fullWidth
         margin="normal"
@@ -159,9 +198,8 @@ function ContactForm({
         InputLabelProps={{
           shrink: true,
         }}
-        sx={commonTextFieldSx}
+        sx={birthdayTextFieldSx}
       />
-
       <Box
         sx={{ mt: 2, mb: 2, display: "flex", gap: 1, justifyContent: "center" }}
       >
