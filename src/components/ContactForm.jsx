@@ -109,6 +109,9 @@ function ContactForm({
       backgroundColor: "white",
     },
     "& .MuiInputBase-input": {
+      appearance: "none",
+      WebkitAppearance: "none",
+      MozAppearance: "textfield",
       color: "black",
       fontWeight: "500",
       boxSizing: "border-box",
@@ -129,6 +132,9 @@ function ContactForm({
         height: "1.4375em !important",
         lineHeight: "1.4375em !important",
         boxSizing: "border-box !important",
+        appearance: "none",
+        WebkitAppearance: "none",
+        MozAppearance: "textfield",
       },
   };
 
