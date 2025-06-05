@@ -32,9 +32,9 @@ form.addEventListener('submit', function (e) {
     }
 
     const newPeople = {
-    name: this.name.value,
-    phone: this.phone.value,
-    email: this.email.value
+        name: this.name.value,
+        phone: this.phone.value,
+        email: this.email.value
     };
 
     const idValue = this.id.value;
@@ -52,20 +52,26 @@ form.addEventListener('submit', function (e) {
     listing(); // Updates the contact list on screen
 
 });
-    function listing(filter = '') {
-        ulPeoples.innerHTML = "";
+function listing(filter = '') {
+    ulPeoples.innerHTML = "";
 
-        list.forEach((item, key) => {
+    list.forEach((item, key) => {
         if (item.name.toUpperCase().includes(filter.toUpperCase()) || filter === "") {
             const line = document.createElement('li');
-            line.innerHTML = `Name: ${item.name} | Phone: ${item.phone} | Email: ${item.email} `;
+            line.innerHTML = `
+              <span>Name: ${item.name}</span>
+              <span>Phone: ${item.phone}</span>
+              <span>Email: ${item.email}</span>
+            `;
 
             const btnDelete = document.createElement('button');
             btnDelete.textContent = "Delete";
+            btnDelete.classList.add('delete-button');
             btnDelete.addEventListener('click', () => deleteContact(key));
 
             const btnEdit = document.createElement('button');
             btnEdit.textContent = "Edit";
+            btnEdit.classList.add('edit-button');
             btnEdit.addEventListener('click', () => editContact(key));
 
             line.appendChild(btnDelete);
@@ -73,27 +79,28 @@ form.addEventListener('submit', function (e) {
 
             ulPeoples.appendChild(line);
         }
-    });    
+    });
 }
 
-   function deleteContact(id) {
+function deleteContact(id) {
     if (confirm("Are you sure you want to delete this contact?")) {
         form.reset();
         list.splice(id, 1);
         saveContact();
         listing();
         alert("Contact deleted successfully.");
-    }};
+    }
+};
 
 
-    function saveContact() {
-        localStorage.setItem("mylist", JSON.stringify(list));
-    };
+function saveContact() {
+    localStorage.setItem("mylist", JSON.stringify(list));
+};
 
-    function editContact(id) {
-        form.id.value = id;
-        form.name.value = list[id].name;
-        form.phone.value = list[id].phone;
-        form.email.value = list[id].email;
-    };
+function editContact(id) {
+    form.id.value = id;
+    form.name.value = list[id].name;
+    form.phone.value = list[id].phone;
+    form.email.value = list[id].email;
+};
 

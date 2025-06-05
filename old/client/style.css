@@ -7,23 +7,17 @@
     /* Faz com que o padding e a borda não aumentem o tamanho do elemento */
 }
 
+
 header {
-    text-align: center; /* Centraliza o texto no cabeçalho */
-    height: auto;
-    min-height: 10vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
 }
 
-.logo-rivool {
-    width: 100;
-    max-width: 100px;
-    height: auto; /* Altura automática para manter a proporção */
-    margin: 20px 0 40px 0;
-}
-
-/* Opcional: resetando fontes e tamanho de texto */
 body {
     font-family: sans-serif;
-    /* Define uma fonte padrão */
     font-size: 16px;
     background-color: black;
     text-decoration: white;
@@ -45,12 +39,10 @@ form {
     margin: 20px auto;
     border: 10px solid rgb(255, 213, 0);
     border-radius: 10px;
-    /* Bordas arredondadas */
     padding: 12px;
     box-shadow: 1px 1px rgb(255, 213, 0);
     text-align: center;
     align-items: center;
-
 }
 
 div.list {
@@ -106,20 +98,35 @@ ul {
 }
 
 li {
+    display: flex;
     font-size: 25px;
     border-bottom: 1px solid rgb(255, 213, 0);
     width: 100%;
-    text-align: center;
+    padding: 10px;
+    text-align: left;
     margin-top: 5px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+span {
+    text-align: left;
 }
 
 button {
-    font-size: 25px;
+    font-size: 20px;
     margin-left: 10px;
     border: none;
-    background: none;
+    background-color: rgb(255, 213, 0);
+    color: black;
+    padding: 8px 12px;
+    border-radius: 10px;
     cursor: pointer;
-    color: rgb(255, 213, 0);
+    min-width: 100px;
+}
+
+button.btn-submit {
     background-color: rgb(255, 213, 0);
     color: black;
     font-size: 20px;
@@ -128,13 +135,86 @@ button {
     cursor: pointer;
 }
 
-button.btn-submit {
+button.edit-button {
+    width: 100px;
+    font-size: inherit;
+}
 
-    background-color: rgb(255, 213, 0);
-    color: black;
-    font-size: 20px;
-    padding: 5px 10px;
-    border-radius: 10px;
-    cursor: pointer;
+button.delete-button {
+    width: 100px;
+    font-size: inherit;
+    background-color: red;
+}
 
+
+@media (max-width: 767px) {
+
+    li {
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    li>span {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: left;
+        flex: 1 1 auto;
+    }
+
+    li>*:last-child {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    li>button {
+        margin: 0;
+        padding: 8px 12px;
+        flex-grow: 0;
+        margin-top: 10px;
+        min-width: 100px;
+    }
+
+    button.edit-button {
+        width: 100px;
+        font-size: inherit;
+    }
+
+    button.delete-button {
+        width: 100px;
+        font-size: inherit;
+        background-color: red;
+    }
+
+    #my-form {
+        width: 90%;
+        height: auto;
+        margin: 20px auto;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    button.btn-submit {
+        width: 100%;
+    }
+
+    #search {
+        min-width: 80%;
+        max-width: 80%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    #my-form {
+        width: 60%;
+    }
 }
