@@ -44,7 +44,7 @@ function ContactList({ contacts, onDeleteContact, onStartEdit }) {
 
   return (
     <Box className="contact-list-container" sx={{ width: "100%", mt: 2 }}>
-      <Typography /* ... Título ... */>Contact List</Typography>
+      <Typography ></Typography>
 
       {contacts.length === 0 ? (
         <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
