@@ -8,35 +8,97 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper"; // Usado para dar um estilo de "folha de papel" ao container da tabela
+import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
-function ContactList({ contacts, onDeleteContact, onStartEdit }) {
+const RenderCardRow = ({ label, value }) => {
+  if (value === null || value === undefined || value === "") return null;
   return (
-    <Box className="contact-list-container" sx={{ width: "100%", mt: 2 }}>
+    <Box sx={{ display: "flex", mb: 0.5, alignItems: "flex-start" }}>
       <Typography
-        component="h2"
+        variant="subtitle2"
         sx={{
-          display: "block",
-          fontSize: "1.5em",
           fontWeight: "bold",
-          fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-          color: "black",
-          mt: 2,
-          mb: 2,
-          alignSelf: "flex-start",
+          width: "100px",
+          minWidth: "100px",
+          mr: 1,
+          flexShrink: 0,
         }}
       >
-        {" "}
-        SAVED CONTACTS
+        {label}:
       </Typography>
+      <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
+        {value}
+      </Typography>
+    </Box>
+  );
+};
+
+function ContactList({ contacts, onDeleteContact, onStartEdit }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  return (
+    <Box className="contact-list-container" sx={{ width: "100%", mt: 2 }}>
+      <Typography /* ... Título ... */>Contact List</Typography>
+
       {contacts.length === 0 ? (
         <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
           No contacts added yet.
         </Typography>
+      ) : isSmallScreen ? (
+        // 3. RENDERIZAÇÃO PARA TELAS PEQUENAS (MODO CARD)
+        <Box>
+          {contacts.map((contact) => (
+            <Paper key={contact.id} sx={{ p: 2, mb: 2 }} elevation={2}>
+              <RenderCardRow label="Name" value={contact.name} />
+              <RenderCardRow label="Phone" value={contact.phone} />
+              <RenderCardRow label="Email" value={contact.email} />
+              <RenderCardRow
+                label="Birthday"
+                value={
+                  contact.birthday
+                    ? new Date(
+                        contact.birthday + "T00:00:00"
+                      ).toLocaleDateString("pt-BR")
+                    : "N/A"
+                }
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  mt: 1,
+                  pt: 1,
+                  borderTop: "1px solid #eee",
+                }}
+              >
+                <IconButton
+                  aria-label="edit contact"
+                  size="small"
+                  onClick={() => onStartEdit(contact)}
+                  sx={{ mr: 0.5 }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  aria-label="delete contact"
+                  size="small"
+                  color="error"
+                  onClick={() => onDeleteContact(contact.id)}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            </Paper>
+          ))}
+        </Box>
       ) : (
+        // 4. RENDERIZAÇÃO PARA TELAS GRANDES (MODO TABELA - código existente)
         <TableContainer component={Paper} elevation={3}>
           <Table sx={{ minWidth: 700 }} aria-label="contact table">
             <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
@@ -76,13 +138,14 @@ function ContactList({ contacts, onDeleteContact, onStartEdit }) {
                       aria-label="edit contact"
                       size="small"
                       onClick={() => onStartEdit(contact)}
+                      sx={{ mr: 0.5 }}
                     >
                       <EditIcon fontSize="small" />
                     </IconButton>
                     <IconButton
                       aria-label="delete contact"
                       size="small"
-                      color="error" // Deixa o ícone de deletar vermelho
+                      color="error"
                       onClick={() => onDeleteContact(contact.id)}
                     >
                       <DeleteIcon fontSize="small" />
